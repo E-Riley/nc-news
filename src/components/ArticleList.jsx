@@ -28,7 +28,7 @@ export default function ArticleList() {
       <section className="article-list-holder">
         <ul id="article-list">
           {articles.map((article, index) => {
-            return <ArticleCard article={article} key={index} />;
+            return <ArticleCard article={article} key={article.article_id} />;
           })}
         </ul>
       </section>
