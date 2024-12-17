@@ -131,6 +131,52 @@ h1 {
   margin: 5px 0;
 }
 
+.comment-list-holder {
+  max-width: 800px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #9f7467;
+  border-radius: 5px;
+  background-color: #a8826f;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.comment-list-holder h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.comment-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.comment-list li {
+  border: 1px solid #9f7467;
+  border-radius: 5px;
+  background-color: #f5f4f5;
+  color: #9f7467;
+  margin-bottom: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-list li h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #9f7467;
+  margin-bottom: 5px;
+}
+
+.comment-list li p {
+  font-size: 14px;
+  color: #9f7467;
+  margin: 5px 0;
+}
+
 @media (max-width: 600px) {
   .navigation {
     flex-direction: column;
@@ -146,5 +192,21 @@ h1 {
   .article img {
     width: 60%;
     margin-bottom: 10px;
+  }
+
+  .comment-list-holder {
+    padding: 15px;
+  }
+
+  .comment-list li {
+    padding: 10px;
+  }
+
+  .comment-list li h3 {
+    font-size: 14px;
+  }
+
+  .comment-list li p {
+    font-size: 12px;
   }
 }

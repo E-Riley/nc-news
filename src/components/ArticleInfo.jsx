@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchArticleById } from "../../api";
 import { Link } from "react-router-dom";
+import CommentsList from "./CommentsList";
+import Collapsible from "./Collapsible";
 
 export default function ArticleInfo() {
   const { articleId } = useParams();
@@ -23,8 +25,8 @@ export default function ArticleInfo() {
   return loading ? (
     <h2>Loading...</h2>
   ) : (
-    <section>
-      <div className="article-information">
+    <>
+      <section className="article-information">
         <div className="back-link">
           <Link to="/articles">
             <h1>Back to articles</h1>
@@ -36,7 +38,10 @@ export default function ArticleInfo() {
         <p>Written at {formattedDate}</p>
         <p>{article.votes} votes</p>
         <p>{article.comment_count} comments</p>
-      </div>
-    </section>
+      </section>
+      <Collapsible>
+        <CommentsList articleId={article.article_id} />
+      </Collapsible>
+    </>
   );
 }
