@@ -25,3 +25,12 @@ export function fetchArticleComments(articleId) {
       return comments;
     });
 }
+
+export function updateArticleVotes(articleId, voteData) {
+  console.log(voteData);
+  return articlesAPI
+    .patch(`/articles/${articleId}`, voteData)
+    .then(({ data: { article } }) => {
+      return article;
+    });
+}
