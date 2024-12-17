@@ -17,3 +17,11 @@ export function fetchArticleById(articleId) {
       return articles;
     });
 }
+
+export function fetchArticleComments(articleId) {
+  return articlesAPI
+    .get(`/articles/${articleId}/comments`)
+    .then(({ data: { comments } }) => {
+      return comments;
+    });
+}
