@@ -250,6 +250,18 @@ button:active {
   color: #f5f4f5;
 }
 
+.dropdown-select {
+  margin: 10px;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #9f7467;
+  border-radius: 5px;
+  background-color: #f5f4f5;
+  color: #9f7467;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
 @media (max-width: 600px) {
   .navigation {
     flex-direction: column;
