@@ -3,7 +3,7 @@ import { fetchArticleComments } from "../../api";
 import { useEffect } from "react";
 import CommentCard from "./CommentCard";
 
-export default function CommentsList({ articleId }) {
+export default function CommentsList({ articleId, refresh }) {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -13,7 +13,7 @@ export default function CommentsList({ articleId }) {
       setComments(comments);
       setLoading(false);
     });
-  }, [articleId]);
+  }, [articleId, refresh]);
 
   return loading ? (
     <p>Loading comments...</p>
