@@ -4,10 +4,13 @@ const articlesAPI = axios.create({
   baseURL: "https://ethans-nc-backend-news-project.onrender.com/api",
 });
 
-export function fetchArticles() {
-  return articlesAPI.get("/articles").then(({ data: { articles } }) => {
-    return articles;
-  });
+export function fetchArticles(topic) {
+  const params = topic ? { topic } : {};
+  return articlesAPI
+    .get("/articles", { params })
+    .then(({ data: { articles } }) => {
+      return articles;
+    });
 }
 
 export function fetchArticleById(articleId) {
@@ -44,4 +47,10 @@ export function postComment(articleId, commentData) {
 
 export function deleteComment(commentId) {
   return articlesAPI.delete(`/comments/${commentId}`);
+}
+
+export function fetchTopics() {
+  return articlesAPI.get("/topics").then(({ data: { topics } }) => {
+    return topics;
+  });
 }
