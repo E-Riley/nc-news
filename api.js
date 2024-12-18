@@ -27,10 +27,17 @@ export function fetchArticleComments(articleId) {
 }
 
 export function updateArticleVotes(articleId, voteData) {
-  console.log(voteData);
   return articlesAPI
     .patch(`/articles/${articleId}`, voteData)
     .then(({ data: { article } }) => {
       return article;
+    });
+}
+
+export function postComment(articleId, commentData) {
+  return articlesAPI
+    .post(`/articles/${articleId}/comments`, commentData)
+    .then(({ data: { comment } }) => {
+      return comment;
     });
 }

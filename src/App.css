@@ -189,7 +189,7 @@ h1 {
 .vote-buttons {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
 }
 
 button {
@@ -212,6 +212,42 @@ button:hover {
 button:active {
   background-color: #353630;
   transform: scale(0.98);
+}
+
+.comment-form {
+  max-width: 800px;
+  padding: 20px;
+  margin: 20px;
+  border: 1px solid #9f7467;
+  border-radius: 5px;
+  background-color: #a8826f;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-form h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #f5f4f5;
+}
+
+.comment-form textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #9f7467;
+  background-color: #f5f4f5;
+  color: #9f7467;
+  margin-bottom: 10px;
+  font-size: 14px;
+  resize: none;
+}
+
+.comment-form p {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #f5f4f5;
 }
 
 @media (max-width: 600px) {
