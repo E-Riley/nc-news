@@ -72,6 +72,12 @@ export default function ArticleInfo() {
       });
   };
 
+  const handleCommentDelete = () => {
+    setArticle((currArticle) => {
+      return { ...currArticle, comment_count: currArticle.comment_count - 1 };
+    });
+  };
+
   return loading ? (
     <h2>Loading...</h2>
   ) : error ? (
@@ -115,6 +121,8 @@ export default function ArticleInfo() {
         <CommentsList
           articleId={article.article_id}
           refresh={refreshComments}
+          username={username}
+          handleDelete={handleCommentDelete}
         />
       </Collapsible>
     </>
