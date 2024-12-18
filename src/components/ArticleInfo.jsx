@@ -59,6 +59,12 @@ export default function ArticleInfo() {
         setCommentPosting(false);
         setCommentSubmitted(true);
         setRefreshComments((currValue) => !currValue);
+        setArticle((currArticle) => {
+          return {
+            ...currArticle,
+            comment_count: currArticle.comment_count + 1,
+          };
+        });
       })
       .catch((error) => {
         console.log(error);
