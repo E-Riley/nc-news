@@ -41,3 +41,7 @@ export function postComment(articleId, commentData) {
       return comment;
     });
 }
+
+export function deleteComment(commentId) {
+  return articlesAPI.delete(`/comments/${commentId}`);
+}
