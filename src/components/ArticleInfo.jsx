@@ -43,6 +43,7 @@ export default function ArticleInfo() {
   };
 
   const handleChange = (e) => {
+    setCommentSubmitted(false);
     setNewComment(e.target.value);
   };
 

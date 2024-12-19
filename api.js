@@ -4,8 +4,8 @@ const articlesAPI = axios.create({
   baseURL: "https://ethans-nc-backend-news-project.onrender.com/api",
 });
 
-export function fetchArticles(topic) {
-  const params = topic ? { topic } : {};
+export function fetchArticles(topic, { sort_by, order }) {
+  const params = { topic, sort_by, order };
   return articlesAPI
     .get("/articles", { params })
     .then(({ data: { articles } }) => {
