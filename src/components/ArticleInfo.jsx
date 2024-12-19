@@ -95,12 +95,24 @@ export default function ArticleInfo() {
         <h3>By {article.author}</h3>
         <p>{article.body}</p>
         <p>Written at {formattedDate}</p>
-        <p>{article.votes} votes</p>
-        <p>{article.comment_count} comments</p>
         <div className="vote-buttons">
-          <button onClick={() => handleVote(1)}>Upvote</button>
-          <button onClick={() => handleVote(-1)}>Downvote</button>
+          <button
+            onClick={() => handleVote(1)}
+            className="btn btn-outline-primary"
+          >
+            <i className="bi bi-arrow-up"></i>
+          </button>
+          <button
+            onClick={() => handleVote(-1)}
+            className="btn btn-outline-danger"
+          >
+            <i className="bi bi-arrow-down"></i>
+          </button>
+          <p className="counts">{article.votes} votes</p>
         </div>
+        <p className="counts">
+          <i className="bi bi-chat-dots"></i> {article.comment_count} comments
+        </p>
       </section>
       <section className="comment-form">
         <h3>Leave a comment</h3>

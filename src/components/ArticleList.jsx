@@ -12,8 +12,8 @@ export default function ArticleList() {
   const [topics, setTopics] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const sortBy = searchParams.get("sort_by");
-  const order = searchParams.get("order");
+  const sortBy = searchParams.get("sort_by") || "created_at";
+  const order = searchParams.get("order") || "desc";
 
   useEffect(() => {
     fetchTopics()
@@ -23,7 +23,7 @@ export default function ArticleList() {
       .catch(() => {
         setError(true);
       });
-  });
+  }, []);
 
   useEffect(() => {
     setLoading(true);
