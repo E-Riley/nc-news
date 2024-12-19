@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchArticles, fetchTopics } from "../../api";
 import ArticleCard from "./ArticleCard";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 export default function ArticleList() {
   const { topic } = useParams();
@@ -10,6 +10,10 @@ export default function ArticleList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [topics, setTopics] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const sortBy = searchParams.get("sort_by");
+  const order = searchParams.get("order");
 
   useEffect(() => {
     fetchTopics()
@@ -23,7 +27,7 @@ export default function ArticleList() {
 
   useEffect(() => {
     setLoading(true);
-    fetchArticles(topic)
+    fetchArticles(topic, { sort_by: sortBy, order: order })
       .then((articles) => {
         setArticles(articles);
         setLoading(false);
@@ -31,7 +35,7 @@ export default function ArticleList() {
       .catch(() => {
         setError(true);
       });
-  }, [topic]);
+  }, [topic, sortBy, order]);
 
   const handleTopicChange = (e) => {
     const chosenTopic = e.target.value;
@@ -40,6 +44,18 @@ export default function ArticleList() {
     } else {
       navigate("/articles");
     }
+  };
+
+  const handleSortBy = (e) => {
+    const newSortBy = e.target.value;
+    searchParams.set("sort_by", newSortBy);
+    setSearchParams(searchParams);
+  };
+
+  const handleOrder = (e) => {
+    const newOrder = e.target.value;
+    searchParams.set("order", newOrder);
+    setSearchParams(searchParams);
   };
 
   return (
@@ -56,6 +72,30 @@ export default function ArticleList() {
           </option>
         ))}
       </select>
+      <label>
+        Sort by:
+        <select
+          value={sortBy}
+          onChange={handleSortBy}
+          className="dropdown-select"
+        >
+          <option value="created_at">Date</option>
+          <option value="votes">Votes</option>
+          <option value="comment_count">Comments</option>
+        </select>
+      </label>
+
+      <label>
+        Order:
+        <select
+          value={order}
+          onChange={handleOrder}
+          className="dropdown-select"
+        >
+          <option value="desc">Descending</option>
+          <option value="asc">Ascending</option>
+        </select>
+      </label>
       {loading ? (
         <section className="loading">
           <h2>Loading!!!</h2>
