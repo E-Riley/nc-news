@@ -10,7 +10,8 @@ export default function ArticleInfo() {
   const { articleId } = useParams();
   const [loading, setLoading] = useState(true);
   const [article, setArticle] = useState({});
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
+  const [commentError, setCommentError] = useState(null);
   const [newComment, setNewComment] = useState("");
   const [commentPosting, setCommentPosting] = useState(false);
   const [commentSubmitted, setCommentSubmitted] = useState(false);
@@ -18,13 +19,19 @@ export default function ArticleInfo() {
 
   useEffect(() => {
     setLoading(true);
+    setError(null);
     fetchArticleById(articleId)
       .then((article) => {
         setArticle(article);
         setLoading(false);
       })
-      .catch(() => {
-        setError(true);
+      .catch((err) => {
+        if (err.response && err.response.status === 404) {
+          setError("The article you are looking for does not exist.");
+        } else {
+          setError("Something went wrong. Please try again");
+        }
+        setLoading(false);
       });
   }, []);
 
@@ -50,6 +57,12 @@ export default function ArticleInfo() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setCommentSubmitted(false);
+    setCommentError(null);
+
+    if (newComment.trim() === "") {
+      setCommentError("Comment cannot be empty");
+      return;
+    }
     setCommentPosting(true);
     postComment(articleId, {
       username,
@@ -67,9 +80,10 @@ export default function ArticleInfo() {
           };
         });
       })
-      .catch((error) => {
-        console.log(error);
-        setError(true);
+      .catch(() => {
+        setCommentPosting(false);
+
+        setCommentError("Failed to post comment, please try again");
       });
   };
 
@@ -82,7 +96,10 @@ export default function ArticleInfo() {
   return loading ? (
     <h2>Loading...</h2>
   ) : error ? (
-    <h2>There was an error, please try again.</h2>
+    <section className="error-log">
+      <h2>Error</h2>
+      <p>{error}</p>
+    </section>
   ) : (
     <>
       <section className="article-information">
@@ -102,13 +119,13 @@ export default function ArticleInfo() {
           >
             <i className="bi bi-arrow-up"></i>
           </button>
+          <p className="counts">{article.votes} votes</p>
           <button
             onClick={() => handleVote(-1)}
             className="btn btn-outline-danger"
           >
             <i className="bi bi-arrow-down"></i>
           </button>
-          <p className="counts">{article.votes} votes</p>
         </div>
         <p className="counts">
           <i className="bi bi-chat-dots"></i> {article.comment_count} comments
@@ -129,6 +146,7 @@ export default function ArticleInfo() {
         </form>
         {commentPosting && <p>Your comment is being posted...</p>}
         {commentSubmitted && <p>Comment successfully posted</p>}
+        {commentError && <p>{commentError}</p>}
       </section>
       <Collapsible>
         <CommentsList

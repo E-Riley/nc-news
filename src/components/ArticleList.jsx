@@ -8,7 +8,7 @@ export default function ArticleList() {
   const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const [topics, setTopics] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -16,24 +16,31 @@ export default function ArticleList() {
   const order = searchParams.get("order") || "desc";
 
   useEffect(() => {
+    setError(null);
     fetchTopics()
       .then((topics) => {
         setTopics(topics);
       })
       .catch(() => {
-        setError(true);
+        setError("Could not load articles, please try again");
       });
   }, []);
 
   useEffect(() => {
     setLoading(true);
+    setError(null);
     fetchArticles(topic, { sort_by: sortBy, order: order })
       .then((articles) => {
         setArticles(articles);
         setLoading(false);
       })
-      .catch(() => {
-        setError(true);
+      .catch((err) => {
+        if (err.response && err.response.status === 404) {
+          setError(
+            "The topic you are searching for does not exist, or does not have any articles"
+          );
+        }
+        setLoading(false);
       });
   }, [topic, sortBy, order]);
 
@@ -103,6 +110,7 @@ export default function ArticleList() {
       ) : error ? (
         <section className="error">
           <h2>There was an error</h2>
+          <p>{error}</p>
         </section>
       ) : (
         <>
