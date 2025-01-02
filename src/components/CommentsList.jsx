@@ -35,18 +35,22 @@ export default function CommentsList({
     <p>Loading comments...</p>
   ) : (
     <section className="comment-list-holder">
-      <ul className="comment-list">
-        {comments.map((comment) => {
-          return (
+      {comments.length === 0 ? (
+        <section className="no-comments">
+          <p>No comments yet. Be the first to comment!</p>
+        </section>
+      ) : (
+        <ul className="comment-list">
+          {comments.map((comment) => (
             <CommentCard
               comment={comment}
               key={comment.comment_id}
               username={username}
               deleteComment={handleDeleteComment}
             />
-          );
-        })}
-      </ul>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
